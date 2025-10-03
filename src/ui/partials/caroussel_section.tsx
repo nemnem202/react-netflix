@@ -14,7 +14,7 @@ export default function CarousselSection({
   return (
     <section className="caroussel-section">
       <h2>{heading}</h2>
-      {isMobile ? <MobileCaroussel /> : <Caroussel type={type} />}
+      {isMobile ? <MobileCaroussel type={type} /> : <Caroussel type={type} />}
     </section>
   );
 }

@@ -1,12 +1,31 @@
 import MovieCard from "./movie_card";
 import "../styles/partials/mobile_caroussel.css";
+import { ApiRequests } from "../../lib/api_request_methods";
+import type { Movie } from "../../types/movie";
+import type { Serie } from "../../types/serie";
+import { useEffect, useState } from "react";
 
-export default function MobileCaroussel() {
+export default function MobileCaroussel({ type }: { type: "movie" | "serie" }) {
+  const [mediaArray, setMediaArray] = useState<(Serie | Movie)[]>([]);
+  const handleMediaLoad = async (pageIdx: number) => {
+    if (type === "movie") {
+      const page = await ApiRequests.get().get_a_page_of_movies(pageIdx);
+      setMediaArray((prev) => [...prev, ...page.results]);
+    } else {
+      const page = await ApiRequests.get().get_a_page_of_series(pageIdx);
+      setMediaArray((prev) => [...prev, ...page.results]);
+    }
+  };
+
+  useEffect(() => {
+    handleMediaLoad(1);
+  }, []);
   return (
     <div className="mobile-caroussel">
-      {Array.from({ length: 20 }).map((_, index) => (
-        <MovieCard key={index} />
-      ))}
+      {mediaArray &&
+        mediaArray.map((e, index) =>
+          "title" in e ? <MovieCard key={index} movie={e as Movie} /> : <div>oeoe</div>
+        )}
     </div>
   );
 }
