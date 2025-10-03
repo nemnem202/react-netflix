@@ -10,20 +10,23 @@ import NotFoundPage from "./ui/pages/not_found";
 import PeoplePageDetail from "./ui/pages/people";
 import MediaPage from "./ui/pages/media";
 import "./ui/styles/global.css";
+import { MobileProvider } from "./context/mobile_context";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/movies" element={<MoviePage />} />
-        <Route path="/series" element={<SeriesPage />} />
-        <Route path="/not-found" element={<NotFoundPage />} />
-        <Route path="/people/:id" element={<PeoplePageDetail />} />
-        <Route path="/:movie-or-serie/:id" element={<MediaPage />} />
-      </Routes>
-    </BrowserRouter>
-    <Footer />
+    <MobileProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviePage />} />
+          <Route path="/series" element={<SeriesPage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="/people/:id" element={<PeoplePageDetail />} />
+          <Route path="/:movie-or-serie/:id" element={<MediaPage />} />
+        </Routes>
+      </BrowserRouter>
+      <Footer />
+    </MobileProvider>
   </StrictMode>
 );
