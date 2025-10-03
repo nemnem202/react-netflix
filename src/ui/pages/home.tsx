@@ -6,6 +6,7 @@ import "../styles/pages/home.css";
 
 export default function HomePage() {
   const { isMobile } = useMobile();
+
   return (
     <div className="home-container">
       {isMobile ? <Banner /> : <BannerCaroussel />}
