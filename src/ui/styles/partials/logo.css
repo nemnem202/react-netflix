@@ -1,0 +1,22 @@
+.logo {
+  cursor: pointer;
+  color: var(--primary);
+  transition: var(--transition-1);
+  display: flex;
+  font-family: var(--logo-font);
+  svg {
+    transition: var(--transition-1);
+    fill: var(--primary);
+    stroke: var(--primary);
+    width: var(--text-4xl) !important;
+    height: var(--text-4xl) !important;
+  }
+}
+
+.logo:hover {
+  color: var(--accent);
+  svg {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+}

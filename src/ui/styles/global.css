@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --primary: #97cbe2;
+  --secondary: #15688b;
+  --accent: #17b4f5;
+  --background: #0b151a;
+  --paragraph: #e8edef;
+
+  font-size: 16px;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --heading-font: "Montserrat", sans-serif;
+  --paragraph-font: "Roboto", sans-serif;
+  --logo-font: "Pacifico", cursive;
+
+  --transition-1: all 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--paragraph);
+  margin: 0;
+  padding: 0;
+  font-family: var(--paragraph-font);
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(136, 13, 30, 0.5);
+  border-radius: 6px;
+  border: 3px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(136, 13, 30, 1);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(136, 13, 30, 0.5) transparent;
+}
+
+*::-moz-scrollbar-thumb:hover {
+  background-color: rgba(136, 13, 30, 1);
+}
+
+p,
+a,
+button {
+  all: unset;
+  transition: var(--transition-1);
+  font-size: var(--text-2xl);
+}

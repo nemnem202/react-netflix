@@ -1,0 +1,7 @@
+.rating-container {
+  display: flex;
+  svg {
+    stroke: var(--primary);
+    fill: var(--primary);
+  }
+}
