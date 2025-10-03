@@ -9,7 +9,7 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
   const [translationIndex, setTranslation] = useState<number>(0);
   const [naturalTranslation, setNaturalTranslation] = useState<number>(0.6);
   const [mediaArray, setMediaArray] = useState<(Serie | Movie)[]>([]);
-  const [carousselRepeats, setCarousselRepeats] = useState<number>(1);
+  const [carousselPageLength, setCarousselPageLength] = useState(1);
   const translationIntervalRef = useRef<any | null>(null);
 
   const handleMediaLoad = async (pageIdx: number) => {
@@ -23,12 +23,16 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
   };
 
   useEffect(() => {
-    handleMediaLoad(1);
-  }, []);
+    handleMediaLoad(carousselPageLength);
+  }, [carousselPageLength]);
+
+  useEffect(() => {
+    handleNextEnter(0.2);
+  }, [mediaArray]);
 
   const moveNext = () => {
     setNaturalTranslation(Math.floor(naturalTranslation / 13) * 13);
-    setTranslation(Math.min(translationIndex + 3, mediaArray.length * carousselRepeats));
+    setTranslation(Math.min(translationIndex + 3, mediaArray.length * carousselPageLength));
     clearTranslationInterval();
   };
 
@@ -39,10 +43,12 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
   };
 
   const handleNextEnter = (speed: number = 1) => {
-    if (translationIntervalRef.current) return;
+    if (translationIntervalRef.current) {
+      clearTranslationInterval();
+    }
     translationIntervalRef.current = setInterval(() => {
       setNaturalTranslation((prev) =>
-        Math.min(prev + speed, mediaArray.length * 13 * carousselRepeats)
+        Math.min(prev + speed, mediaArray.length * 13 * carousselPageLength)
       );
     }, 100);
   };
@@ -62,17 +68,12 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
     }, 100);
   };
 
-  useEffect(() => handleNextEnter(0.2), []);
-
   useEffect(() => {
     const currentCardTranslation = translationIndex + Math.floor(naturalTranslation / 13);
     const max_size = document.body.getBoundingClientRect().width;
-    if (currentCardTranslation * 13 * 16 >= max_size * carousselRepeats) {
+    if (currentCardTranslation * 13 * 16 >= max_size * carousselPageLength) {
       console.log("repeat");
-      setCarousselRepeats(carousselRepeats + 1);
-    }
-    if (currentCardTranslation * 13 * 16 < max_size) {
-      setCarousselRepeats(1);
+      setCarousselPageLength(carousselPageLength + 1);
     }
   }, [translationIndex, naturalTranslation]);
 
