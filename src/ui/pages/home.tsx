@@ -13,8 +13,8 @@ export default function HomePage() {
   return (
     <div className="home-container">
       {isMobile ? <Banner /> : <BannerCaroussel />}
-      <CarousselSection />
-      <CarousselSection />
+      <CarousselSection type="movie" heading="Movies" />
+      <CarousselSection type="serie" heading="TV shows" />
     </div>
   );
 }

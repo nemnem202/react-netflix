@@ -126,4 +126,8 @@ export class ApiRequests {
   static get_movie_img_url_from_path = (path: string | null): string => {
     return `https://image.tmdb.org/t/p/w342${path}`;
   };
+
+  static get_serie_img_url_from_path = (path: string | null): string => {
+    return `https://image.tmdb.org/t/p/w342${path}`;
+  };
 }

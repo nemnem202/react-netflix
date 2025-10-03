@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Serie } from "../../types/serie";
 import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
+import SerieCard from "./serie_card";
 
 export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" }) {
   const [translationIndex, setTranslation] = useState<number>(0);
@@ -108,7 +109,7 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
             "title" in e ? (
               <MovieCard key={index} movie={e as Movie} />
             ) : (
-              <div key={index}>{JSON.stringify(e)}</div>
+              <SerieCard key={index} serie={e as Serie} />
             )
           )}
         </div>
