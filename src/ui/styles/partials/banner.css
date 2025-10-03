@@ -50,3 +50,18 @@
     margin-bottom: var(--space-2) !important;
   }
 }
+
+@media (max-width: 743px) {
+  .banner-container {
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .banner-img-container {
+    width: 100%;
+    height: 200px;
+    /* width: fit-content; */
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+}

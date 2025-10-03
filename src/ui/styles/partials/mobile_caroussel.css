@@ -1,0 +1,8 @@
+.mobile-caroussel {
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  display: flex;
+
+  gap: var(--space-3);
+}

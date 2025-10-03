@@ -8,8 +8,8 @@
     transition: var(--transition-1);
     fill: var(--primary);
     stroke: var(--primary);
-    width: var(--text-4xl) !important;
-    height: var(--text-4xl) !important;
+    width: var(--text-4xl);
+    height: var(--text-4xl);
   }
 }
 
