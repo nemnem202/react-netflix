@@ -7,7 +7,6 @@ export default function Rating({ rate, size }: { rate: number; size: number }) {
         <span key={e}>
           {e < rate ? (
             <svg
-              stroke-width="0"
               viewBox="0 0 576 512"
               height={`${size}rem`}
               width={`${size}rem`}
@@ -19,7 +18,6 @@ export default function Rating({ rate, size }: { rate: number; size: number }) {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
               viewBox="0 0 536 512"
               height={`${size}rem`}
               width={`${size}rem`}
@@ -31,7 +29,6 @@ export default function Rating({ rate, size }: { rate: number; size: number }) {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
               viewBox="0 0 576 512"
               height={`${size}rem`}
               width={`${size}rem`}

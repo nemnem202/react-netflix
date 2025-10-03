@@ -10,7 +10,7 @@ import NotFoundPage from "./ui/pages/not_found";
 import PeoplePageDetail from "./ui/pages/people";
 import MediaPage from "./ui/pages/media";
 import "./ui/styles/global.css";
-import { MobileProvider } from "./context/mobile_context";
+import { MobileProvider } from "./providers/mobileProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
