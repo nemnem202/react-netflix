@@ -1,0 +1,54 @@
+.caroussel {
+  display: flex;
+  gap: var(--space-4);
+  transition: var(--transition-1);
+}
+
+.caroussel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.caroussel-arrow-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  .arrow-next,
+  .arrow-prev {
+    position: absolute;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    svg {
+      fill: var(--paragraph);
+    }
+  }
+}
+
+.arrow-prev {
+  left: 0;
+  padding-right: 10rem;
+
+  background: linear-gradient(
+    to right,
+    var(--background) 0%,
+    var(--background) 30%,
+    rgba(11, 21, 26, 0) 100%
+  );
+  svg {
+    transform: rotate(180deg);
+  }
+}
+
+.arrow-next {
+  right: 0;
+  padding-left: 10rem;
+  background: linear-gradient(
+    to left,
+    var(--background) 0%,
+    var(--background) 30%,
+    rgba(11, 21, 26, 0) 100%
+  );
+}

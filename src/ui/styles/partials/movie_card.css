@@ -2,8 +2,9 @@
   border-radius: 1rem;
   overflow: hidden;
   position: relative;
+  min-width: 12rem;
   width: 12rem;
-  aspect-ratio: 3/4;
+  height: 16rem;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,7 +4,7 @@
   --primary: #97cbe2;
   --secondary: #15688b;
   --accent: #17b4f5;
-  --background: #0b151a;
+  --background: rgba(11, 21, 26, 1);
   --paragraph: #e8edef;
 
   font-size: 16px;
