@@ -3,7 +3,7 @@ import "../styles/partials/caroussel.css";
 import { useEffect, useRef, useState } from "react";
 export default function Caroussel() {
   const [translationIndex, setTranslation] = useState<number>(0);
-  const [naturalTranslation, setNaturalTranslation] = useState<number>(0);
+  const [naturalTranslation, setNaturalTranslation] = useState<number>(0.6);
   const [arrayLength, setArrayLength] = useState<number>(20);
   const [carousselRepeats, setCarousselRepeats] = useState<number>(1);
   const translationIntervalRef = useRef<any | null>(null);
@@ -20,11 +20,10 @@ export default function Caroussel() {
     clearTranslationInterval();
   };
 
-  const handleNextEnter = () => {
+  const handleNextEnter = (speed: number = 1) => {
     if (translationIntervalRef.current) return;
-
     translationIntervalRef.current = setInterval(() => {
-      setNaturalTranslation((prev) => Math.min(prev + 1, arrayLength * 13 * carousselRepeats));
+      setNaturalTranslation((prev) => Math.min(prev + speed, arrayLength * 13 * carousselRepeats));
     }, 100);
   };
 
@@ -42,6 +41,8 @@ export default function Caroussel() {
       setNaturalTranslation((prev) => Math.max(prev - 1, 0));
     }, 100);
   };
+
+  useEffect(() => handleNextEnter(0.2), []);
 
   useEffect(() => {
     const currentCardTranslation = translationIndex + Math.floor(naturalTranslation / 13);
@@ -64,14 +65,18 @@ export default function Caroussel() {
             height="5rem"
             viewBox="0 -960 960 960"
             onClick={movePrev}
-            onMouseEnter={handlePrevEnter}
-            onMouseLeave={clearTranslationInterval}
+            onMouseEnter={() => handlePrevEnter()}
+            onMouseLeave={() => handleNextEnter(0.2)}
           >
             <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
           </svg>
         </div>
       )}
-      <div className="caroussel-container">
+      <div
+        className="caroussel-container"
+        onMouseEnter={() => clearTranslationInterval()}
+        onMouseLeave={() => handleNextEnter(0.2)}
+      >
         <div
           className="caroussel"
           style={{
@@ -89,8 +94,8 @@ export default function Caroussel() {
           height="5rem"
           viewBox="0 -960 960 960"
           onClick={moveNext}
-          onMouseEnter={handleNextEnter}
-          onMouseLeave={clearTranslationInterval}
+          onMouseEnter={() => handleNextEnter()}
+          onMouseLeave={() => handleNextEnter(0.2)}
         >
           <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
         </svg>

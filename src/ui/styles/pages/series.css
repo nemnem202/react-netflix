@@ -1,0 +1,12 @@
+.series-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  > .title {
+    font-size: var(--text-5xl);
+    margin-bottom: 5rem;
+  }
+}

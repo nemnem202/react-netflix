@@ -1,0 +1,9 @@
+.caroussel-section {
+  margin-bottom: 5rem;
+  width: 100%;
+  box-sizing: border-box !important;
+  padding: var(--space-3);
+  h2 {
+    font-size: var(--text-3xl);
+  }
+}

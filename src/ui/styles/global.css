@@ -38,6 +38,13 @@
   --logo-font: "Pacifico", cursive;
 
   --transition-1: all 0.2s ease;
+  --transition-2: all 1s ease;
+}
+
+@media (max-width: 743px) {
+  :root {
+    font-size: 8px;
+  }
 }
 
 * {

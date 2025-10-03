@@ -1,0 +1,26 @@
+.banner-caroussel {
+  width: fit-content;
+  display: flex;
+  transition: var(--transition-2);
+}
+
+.banner-caroussel-container {
+  width: 800px;
+  overflow: hidden;
+  padding: 0 10rem;
+  box-sizing: content-box;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
