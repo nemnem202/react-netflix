@@ -1,10 +1,6 @@
-import { useEffect } from "react";
 import "../styles/partials/navbar.css";
 
 export default function NavBar({ page }: { page: string }) {
-  useEffect(() => {
-    console.log("page changed" + page);
-  }, [page]);
   return (
     <nav>
       <a href="/" className={page === "/" ? "selected" : ""}>

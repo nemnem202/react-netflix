@@ -3,12 +3,11 @@ import "../styles/pages/series.css";
 
 export default function SeriesPage() {
   return (
-    <div className="series-container">
+    <main className="series-container">
       <h1 className="title">Series</h1>
-      <CarousselSection />
-      <CarousselSection />
-      <CarousselSection />
-      <CarousselSection />
-    </div>
+      <CarousselSection type="serie" heading="Serie" />
+      <CarousselSection type="serie" heading="Serie" />
+      <CarousselSection type="serie" heading="Serie" />
+    </main>
   );
 }

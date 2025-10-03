@@ -6,6 +6,9 @@ export class ApiRequests {
   private static instance: ApiRequests;
   private static token = import.meta.env.VITE_READONLY_API_TOKEN;
   private static api_url = import.meta.env.VITE_API_URL;
+
+  private movies: Set<Movie> = new Set();
+  private series: Set<Serie> = new Set();
   private constructor() {}
 
   public static get(): ApiRequests {
@@ -42,9 +45,14 @@ export class ApiRequests {
   };
 
   get_movie_from_id = async (id: number): Promise<Movie | null> => {
+    const local = this.get_local_memory_movie(id);
+
+    if (local) return local;
+
     const response = await this.fetch_api<Movie>(`/movie/${id}`);
 
     if (response) {
+      this.movies.add(response);
       return response;
     } else {
       return null;
@@ -63,6 +71,7 @@ export class ApiRequests {
     const response = await this.fetch_api<Movie[]>(`/movie/${content}`);
 
     if (response) {
+      response.forEach((e) => this.movies.add(e));
       return response;
     } else {
       return [];
@@ -70,9 +79,14 @@ export class ApiRequests {
   };
 
   get_serie_from_id = async (id: number): Promise<Serie | null> => {
+    const local = this.get_local_memory_serie(id);
+
+    if (local) return local;
+
     const response = await this.fetch_api<Serie>(`/tv/${id}`);
 
     if (response) {
+      this.series.add(response);
       return response;
     } else {
       return null;
@@ -83,6 +97,7 @@ export class ApiRequests {
     const response = await this.fetch_api<Serie[]>(`/movie/${content}`);
 
     if (response) {
+      response.forEach((e) => this.series.add(e));
       return response;
     } else {
       return [];
@@ -95,6 +110,7 @@ export class ApiRequests {
     );
 
     if (response) {
+      response.results.forEach((e) => this.series.add(e));
       return response;
     } else {
       return {
@@ -112,6 +128,7 @@ export class ApiRequests {
     );
 
     if (response) {
+      response.results.forEach((e) => this.movies.add(e));
       return response;
     } else {
       return {
@@ -129,5 +146,17 @@ export class ApiRequests {
 
   static get_serie_img_url_from_path = (path: string | null): string => {
     return `https://image.tmdb.org/t/p/w342${path}`;
+  };
+
+  private get_local_memory_movie = (id: number): Movie | undefined => {
+    const local = Array.from(this.movies).find((e) => e.id === id);
+    if (local) console.log("local !");
+    return local;
+  };
+
+  private get_local_memory_serie = (id: number): Serie | undefined => {
+    const local = Array.from(this.series).find((e) => e.id === id);
+    if (local) console.log("local !");
+    return local;
   };
 }

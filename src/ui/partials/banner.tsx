@@ -9,7 +9,6 @@ export default function Banner() {
 
   const getMovie = async () => {
     const movie = await ApiRequests.get().get_random_movie();
-    console.log(movie);
     setMovie(movie);
   };
 

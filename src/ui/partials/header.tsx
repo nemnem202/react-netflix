@@ -10,7 +10,6 @@ export default function Header() {
 
   useEffect(() => {
     set_current_page(location.pathname);
-    console.log(current_page);
   }, [location, current_page]);
 
   return (

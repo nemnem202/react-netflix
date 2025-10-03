@@ -11,10 +11,10 @@ export default function HomePage() {
   useEffect(() => {}, [isMobile]);
 
   return (
-    <div className="home-container">
+    <main className="home-container">
       {isMobile ? <Banner /> : <BannerCaroussel />}
       <CarousselSection type="movie" heading="Movies" />
       <CarousselSection type="serie" heading="TV shows" />
-    </div>
+    </main>
   );
 }
