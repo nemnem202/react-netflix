@@ -1,29 +1,49 @@
 import MovieCard from "./movie_card";
 import "../styles/partials/caroussel.css";
 import { useEffect, useRef, useState } from "react";
-export default function Caroussel() {
+import type { Serie } from "../../types/serie";
+import type { Movie } from "../../types/movie";
+import { ApiRequests } from "../../lib/api_request_methods";
+
+export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" }) {
   const [translationIndex, setTranslation] = useState<number>(0);
   const [naturalTranslation, setNaturalTranslation] = useState<number>(0.6);
-  const [arrayLength, setArrayLength] = useState<number>(20);
+  const [mediaArray, setMediaArray] = useState<(Serie | Movie)[]>([]);
   const [carousselRepeats, setCarousselRepeats] = useState<number>(1);
   const translationIntervalRef = useRef<any | null>(null);
 
+  const handleMediaLoad = async (pageIdx: number) => {
+    if (type === "movie") {
+      const page = await ApiRequests.get().get_a_page_of_movies(pageIdx);
+      setMediaArray((prev) => [...prev, ...page.results]);
+    } else {
+      const page = await ApiRequests.get().get_a_page_of_series(pageIdx);
+      setMediaArray((prev) => [...prev, ...page.results]);
+    }
+  };
+
+  useEffect(() => {
+    handleMediaLoad(1);
+  }, []);
+
   const moveNext = () => {
     setNaturalTranslation(Math.floor(naturalTranslation / 13) * 13);
-    setTranslation(Math.min(translationIndex + 1, arrayLength * carousselRepeats));
+    setTranslation(Math.min(translationIndex + 3, mediaArray.length * carousselRepeats));
     clearTranslationInterval();
   };
 
   const movePrev = () => {
     setNaturalTranslation(Math.floor(naturalTranslation / 13) * 13);
-    setTranslation(Math.max(translationIndex - 1, 0));
+    setTranslation(Math.max(translationIndex - 3, 0));
     clearTranslationInterval();
   };
 
   const handleNextEnter = (speed: number = 1) => {
     if (translationIntervalRef.current) return;
     translationIntervalRef.current = setInterval(() => {
-      setNaturalTranslation((prev) => Math.min(prev + speed, arrayLength * 13 * carousselRepeats));
+      setNaturalTranslation((prev) =>
+        Math.min(prev + speed, mediaArray.length * 13 * carousselRepeats)
+      );
     }, 100);
   };
 
@@ -58,7 +78,7 @@ export default function Caroussel() {
 
   return (
     <div className="caroussel-arrow-container">
-      {(translationIndex > 0 || naturalTranslation > 0) && (
+      {(translationIndex > 0 || naturalTranslation > 0.5) && (
         <div className="arrow-prev">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -83,9 +103,13 @@ export default function Caroussel() {
             transform: `translateX(${-translationIndex * (12 + 1) - naturalTranslation}rem)`,
           }}
         >
-          {Array.from({ length: arrayLength * carousselRepeats }).map((_, index) => (
-            <MovieCard key={index} />
-          ))}
+          {mediaArray.map((e, index) =>
+            "title" in e ? (
+              <MovieCard key={index} movie={e as Movie} />
+            ) : (
+              <div key={index}>{JSON.stringify(e)}</div>
+            )
+          )}
         </div>
       </div>
       <div className="arrow-next">

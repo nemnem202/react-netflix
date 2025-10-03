@@ -18,6 +18,8 @@
   cursor: pointer;
   .arrow-next,
   .arrow-prev {
+    transition: var(--transition-1);
+    opacity: 0;
     position: absolute;
     z-index: 5;
     height: 100%;
@@ -26,6 +28,13 @@
     svg {
       fill: var(--paragraph);
     }
+  }
+}
+
+.caroussel-arrow-container:hover {
+  .arrow-next,
+  .arrow-prev {
+    opacity: 1;
   }
 }
 

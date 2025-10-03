@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useMobile } from "../../hooks/useMobile";
 import Banner from "../partials/banner";
 import BannerCaroussel from "../partials/banner_caroussel";
@@ -6,6 +7,8 @@ import "../styles/pages/home.css";
 
 export default function HomePage() {
   const { isMobile } = useMobile();
+
+  useEffect(() => {}, [isMobile]);
 
   return (
     <div className="home-container">

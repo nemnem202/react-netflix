@@ -1,4 +1,5 @@
 import type { Movie } from "../types/movie";
+import type { Paginated } from "../types/page";
 import type { Serie } from "../types/serie";
 
 export class ApiRequests {
@@ -40,7 +41,7 @@ export class ApiRequests {
     }
   };
 
-  get_movie_from_id = async (id: string): Promise<Movie | null> => {
+  get_movie_from_id = async (id: number): Promise<Movie | null> => {
     const response = await this.fetch_api<Movie>(`/movie/${id}`);
 
     if (response) {
@@ -48,6 +49,14 @@ export class ApiRequests {
     } else {
       return null;
     }
+  };
+
+  get_random_movie = async (): Promise<Movie | null> => {
+    const page = await ApiRequests.get().get_a_page_of_movies(1);
+
+    const results = page.results;
+    const random_movie_idx = Math.floor(Math.random() * results.length);
+    return results[random_movie_idx];
   };
 
   search_movie = async (content: string): Promise<Movie[]> => {
@@ -60,7 +69,7 @@ export class ApiRequests {
     }
   };
 
-  get_serie_from_id = async (id: string): Promise<Serie | null> => {
+  get_serie_from_id = async (id: number): Promise<Serie | null> => {
     const response = await this.fetch_api<Serie>(`/tv/${id}`);
 
     if (response) {
@@ -80,19 +89,41 @@ export class ApiRequests {
     }
   };
 
-  // get_a_page_of_series = async (page: number): Promise<Serie[]> => {
-  //   try {
-  //   } catch (err) {
-  //     console.error(err);
-  //     return [];
-  //   }
-  // };
+  get_a_page_of_series = async (page: number): Promise<Paginated<Serie>> => {
+    const response = await this.fetch_api<Paginated<Serie>>(
+      `/discover/tv?&sort_by=popularity.desc&page=${page}`
+    );
 
-  //   get_a_page_of_movies = async (page: number): Promise<Movie[]> => {
-  //     try {
-  //     } catch (err) {
-  //       console.error(err);
-  //       return [];
-  //     }
-  //   };
+    if (response) {
+      return response;
+    } else {
+      return {
+        page: page,
+        results: [],
+        total_pages: 0,
+        total_results: 0,
+      };
+    }
+  };
+
+  get_a_page_of_movies = async (page: number): Promise<Paginated<Movie>> => {
+    const response = await this.fetch_api<Paginated<Movie>>(
+      `/discover/movie?&sort_by=popularity.desc&page=${page}`
+    );
+
+    if (response) {
+      return response;
+    } else {
+      return {
+        page: page,
+        results: [],
+        total_pages: 0,
+        total_results: 0,
+      };
+    }
+  };
+
+  static get_movie_img_url_from_path = (path: string | null): string => {
+    return `https://image.tmdb.org/t/p/w342${path}`;
+  };
 }
