@@ -1,5 +1,6 @@
 .rating-container {
   display: flex;
+  width: fit-content;
   svg {
     stroke: var(--primary);
     fill: var(--primary);
