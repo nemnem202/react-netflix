@@ -83,7 +83,7 @@ export class ApiRequests {
 
     if (local) return local;
 
-    const response = await this.fetch_api<Serie>(`/tv/${id}`);
+    const response = await this.fetch_api<Serie>(`tv/${id}`);
 
     if (response) {
       this.series.add(response);

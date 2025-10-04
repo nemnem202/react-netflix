@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="/people/:id" element={<PeoplePageDetail />} />
-          <Route path="/:movie-or-serie/:id" element={<MediaPage />} />
+          <Route path="/:media/:id" element={<MediaPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -5,11 +5,11 @@ import { ApiRequests } from "../../lib/api_request_methods";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function MediaPage() {
-  const params = useParams<{ "movie-or-serie": string; id: string }>();
+  const params = useParams<{ media: string; id: string }>();
   const [media, setMedia] = useState<Movie | Serie | null>(null);
   const navigate = useNavigate();
 
-  const type = params["movie-or-serie"] === "movies" ? "movie" : "serie";
+  const type = params["media"] === "movie" ? "movie" : "serie";
   const id = params.id ? parseInt(params.id) : NaN;
 
   const getMedia = async () => {
