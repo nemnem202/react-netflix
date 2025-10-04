@@ -4,6 +4,7 @@ import { ApiRequests } from "../../lib/api_request_methods";
 import type { Movie } from "../../types/movie";
 import type { Serie } from "../../types/serie";
 import { useEffect, useState } from "react";
+import SerieCard from "./serie_card";
 
 export default function MobileCaroussel({ type }: { type: "movie" | "serie" }) {
   const [mediaArray, setMediaArray] = useState<(Serie | Movie)[]>([]);
@@ -24,7 +25,11 @@ export default function MobileCaroussel({ type }: { type: "movie" | "serie" }) {
     <div className="mobile-caroussel">
       {mediaArray &&
         mediaArray.map((e, index) =>
-          "title" in e ? <MovieCard key={index} movie={e as Movie} /> : <div>oeoe</div>
+          "title" in e ? (
+            <MovieCard key={index} movie={e as Movie} />
+          ) : (
+            <SerieCard key={index} serie={e as Serie} />
+          )
         )}
     </div>
   );
