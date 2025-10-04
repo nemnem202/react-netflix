@@ -3,6 +3,8 @@ import type { Movie } from "../../types/movie";
 import type { Serie } from "../../types/serie";
 import { ApiRequests } from "../../lib/api_request_methods";
 import { useNavigate, useParams } from "react-router-dom";
+import Rating from "../partials/rating";
+import "../styles/pages/media.css";
 
 export default function MediaPage() {
   const params = useParams<{ media: string; id: string }>();
@@ -30,16 +32,45 @@ export default function MediaPage() {
 
   return (
     media && (
-      <div className="media-page">
-        {"title" in media ? (
-          <>
-            <h1>{media.title}</h1>
-          </>
-        ) : (
-          <>
-            <h1>{media.name}</h1>
-          </>
-        )}
+      <div className="media_page">
+        <div className="media_header">
+          <img
+            className="media_poster"
+            src={
+              "title" in media
+                ? ApiRequests.get_movie_img_url_from_path(media.poster_path)
+                : ApiRequests.get_serie_img_url_from_path(media.poster_path)
+            }
+            alt={("title" in media ? media.title : media.name) || "poster"}
+          />
+
+          <div className="media_info">
+            <h1 className="media_title">{"title" in media ? media.title : media.name}</h1>
+            <p className="media_overview">{media.overview}</p>
+
+            {media.genres && (
+              <div className="media_genres">
+                <span className="label">Genres:</span>
+                {media.genres.map((g, i) => (
+                  <span className="genre_tag" key={i}>
+                    {g.name}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="media_meta">
+              {media.adult && <span className="adult_badge">🔞</span>}
+              <span className="origin">{media.origin_country}</span>
+              <span className="status">{media.status}</span>
+            </div>
+
+            <div className="media_rating">
+              <Rating size={1.5} rate={media.vote_average} />
+              <p className="popularity">{media.popularity} people watched it !</p>
+            </div>
+          </div>
+        </div>
       </div>
     )
   );
