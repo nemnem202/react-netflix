@@ -3,9 +3,11 @@ import "../styles/partials/banner.css";
 import { useEffect, useState } from "react";
 import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner() {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const nav = useNavigate();
 
   const getMovie = async () => {
     const movie = await ApiRequests.get().get_random_movie();
@@ -19,7 +21,7 @@ export default function Banner() {
   }, [movie]);
 
   return movie ? (
-    <div className="banner-container">
+    <div className="banner-container" onClick={() => nav("/movie/" + movie.id)}>
       <div className="banner-img-container">
         <img src={ApiRequests.get_movie_img_url_from_path(movie.poster_path)} alt="" />
       </div>
