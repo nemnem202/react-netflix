@@ -13,7 +13,7 @@
   display: flex;
   gap: var(--space-8);
   align-items: flex-start;
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .people_filmography {
-  max-width: 1200px;
+  max-max-width: 1200px;
 }
 
 .people_movies_container {
