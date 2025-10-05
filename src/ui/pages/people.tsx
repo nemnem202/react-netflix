@@ -7,7 +7,6 @@ import Spinner from "../partials/spinner";
 import "../styles/pages/people.css";
 import type { PeopleDetail } from "../../types/people_detail";
 import type { Movie } from "../../types/movie";
-import type { Serie } from "../../types/serie";
 import MovieCard from "../partials/movie_card";
 
 export default function PeoplePageDetail() {
