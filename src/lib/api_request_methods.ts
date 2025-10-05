@@ -1,6 +1,7 @@
 import type { CastMember } from "../types/cast_member";
 import type { Movie } from "../types/movie";
 import type { Paginated } from "../types/page";
+import type { PeopleDetail } from "../types/people_detail";
 import type { Query } from "../types/query";
 import type { Serie } from "../types/serie";
 
@@ -11,7 +12,7 @@ export class ApiRequests {
 
   private movies: Set<Movie> = new Set();
   private series: Set<Serie> = new Set();
-  private cast_members: Set<CastMember> = new Set();
+  private peoples: Set<PeopleDetail> = new Set();
   private constructor() {}
 
   public static get(): ApiRequests {
@@ -164,7 +165,6 @@ export class ApiRequests {
     );
 
     if (response) {
-      response.cast.forEach((e) => this.cast_members.add(e));
       return response.cast;
     } else {
       return [];
@@ -175,22 +175,21 @@ export class ApiRequests {
     const response = await this.fetch_api<{ id: number; cast: CastMember[] }>(`/tv/${id}/credits`);
 
     if (response) {
-      response.cast.forEach((e) => this.cast_members.add(e));
       return response.cast;
     } else {
       return [];
     }
   };
 
-  get_cast_member = async (id: number): Promise<CastMember | null> => {
+  get_cast_member = async (id: number): Promise<PeopleDetail | null> => {
     const local = this.get_local_memory_cast(id);
 
     if (local) return local;
 
-    const response = await this.fetch_api<CastMember>(`/person/${id}`);
+    const response = await this.fetch_api<PeopleDetail>(`/person/${id}`);
 
     if (response) {
-      this.cast_members.add(response);
+      this.peoples.add(response);
       return response;
     } else {
       return null;
@@ -198,6 +197,9 @@ export class ApiRequests {
   };
 
   static get_img_url_from_path = (path: string | null): string => {
+    if (path === "" || !path) {
+      return "https://www.vhv.rs/dpng/d/505-5058560_person-placeholder-image-free-hd-png-download.png";
+    }
     return `https://image.tmdb.org/t/p/w342${path}`;
   };
 
@@ -213,8 +215,8 @@ export class ApiRequests {
     return local;
   };
 
-  private get_local_memory_cast = (id: number): CastMember | undefined => {
-    const local = Array.from(this.cast_members).find((e) => e.id === id);
+  private get_local_memory_cast = (id: number): PeopleDetail | undefined => {
+    const local = Array.from(this.peoples).find((e) => e.id === id);
     if (local) console.log("local !");
     return local;
   };
