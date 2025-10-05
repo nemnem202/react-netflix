@@ -87,7 +87,11 @@ export default function Caroussel({
   }, [translationIndex, naturalTranslation]);
 
   return (
-    <div className="caroussel-arrow-container">
+    <div
+      className="caroussel-arrow-container"
+      onMouseEnter={() => clearTranslationInterval()}
+      onMouseLeave={() => handleNextEnter(0.2)}
+    >
       {(translationIndex > 0 || naturalTranslation > 0.5) && (
         <div className="arrow-prev">
           <svg
@@ -95,18 +99,14 @@ export default function Caroussel({
             height="5rem"
             viewBox="0 -960 960 960"
             onClick={movePrev}
-            onMouseEnter={() => handlePrevEnter()}
-            onMouseLeave={() => handleNextEnter(0.2)}
+            // onMouseEnter={() => handlePrevEnter()}
+            // onMouseLeave={() => handleNextEnter(0.2)}
           >
             <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
           </svg>
         </div>
       )}
-      <div
-        className="caroussel-container"
-        onMouseEnter={() => clearTranslationInterval()}
-        onMouseLeave={() => handleNextEnter(0.2)}
-      >
+      <div className="caroussel-container">
         <div
           className="caroussel"
           style={{
@@ -132,8 +132,8 @@ export default function Caroussel({
           height="5rem"
           viewBox="0 -960 960 960"
           onClick={moveNext}
-          onMouseEnter={() => handleNextEnter()}
-          onMouseLeave={() => handleNextEnter(0.2)}
+          // onMouseEnter={() => handleNextEnter()}
+          // onMouseLeave={() => handleNextEnter(0.2)}
         >
           <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
         </svg>
