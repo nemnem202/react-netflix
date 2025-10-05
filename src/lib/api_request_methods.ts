@@ -1,5 +1,6 @@
 import type { Movie } from "../types/movie";
 import type { Paginated } from "../types/page";
+import type { Query } from "../types/query";
 import type { Serie } from "../types/serie";
 
 export class ApiRequests {
@@ -104,9 +105,16 @@ export class ApiRequests {
     }
   };
 
-  get_a_page_of_series = async (page: number): Promise<Paginated<Serie>> => {
+  get_a_page_of_series = async (page: number, query?: Query): Promise<Paginated<Serie>> => {
+    let queryString = "";
+    if (query) {
+      for (const [k, v] of Object.entries(query)) {
+        queryString += `&${k}=${v}`;
+      }
+    }
+
     const response = await this.fetch_api<Paginated<Serie>>(
-      `/discover/tv?&sort_by=popularity.desc&page=${page}`
+      `/discover/tv?&sort_by=popularity.desc&page=${page}` + queryString
     );
 
     if (response) {
@@ -122,9 +130,16 @@ export class ApiRequests {
     }
   };
 
-  get_a_page_of_movies = async (page: number): Promise<Paginated<Movie>> => {
+  get_a_page_of_movies = async (page: number, query?: Query): Promise<Paginated<Movie>> => {
+    let queryString = "";
+    if (query) {
+      for (const [k, v] of Object.entries(query)) {
+        queryString += `&${k}=${v}`;
+      }
+    }
+
     const response = await this.fetch_api<Paginated<Movie>>(
-      `/discover/movie?&sort_by=popularity.desc&page=${page}`
+      `/discover/movie?&sort_by=popularity.desc&page=${page}` + queryString
     );
 
     if (response) {

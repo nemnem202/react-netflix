@@ -5,8 +5,15 @@ import type { Serie } from "../../types/serie";
 import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
 import SerieCard from "./serie_card";
+import type { Query } from "../../types/query";
 
-export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" }) {
+export default function Caroussel({
+  type = "movie",
+  query = {},
+}: {
+  type: "movie" | "serie";
+  query?: Query;
+}) {
   const [translationIndex, setTranslation] = useState<number>(0);
   const [naturalTranslation, setNaturalTranslation] = useState<number>(0.6);
   const [mediaArray, setMediaArray] = useState<(Serie | Movie)[]>([]);
@@ -15,10 +22,10 @@ export default function Caroussel({ type = "movie" }: { type: "movie" | "serie" 
 
   const handleMediaLoad = async (pageIdx: number) => {
     if (type === "movie") {
-      const page = await ApiRequests.get().get_a_page_of_movies(pageIdx);
+      const page = await ApiRequests.get().get_a_page_of_movies(pageIdx, query);
       setMediaArray((prev) => [...prev, ...page.results]);
     } else {
-      const page = await ApiRequests.get().get_a_page_of_series(pageIdx);
+      const page = await ApiRequests.get().get_a_page_of_series(pageIdx, query);
       setMediaArray((prev) => [...prev, ...page.results]);
     }
   };
