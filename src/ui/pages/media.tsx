@@ -101,7 +101,13 @@ export default function MediaPage() {
             <h2>Casting</h2>
             <div className="casting_container">
               {cast.map((e, index) => (
-                <div className="casting_img" key={index}>
+                <div
+                  className="casting_img"
+                  key={index}
+                  onClick={() => {
+                    window.location.href = `/people/${e.id}`;
+                  }}
+                >
                   <img src={ApiRequests.get_img_url_from_path(e.profile_path)} alt="" />
                 </div>
               ))}

@@ -11,6 +11,7 @@ export class ApiRequests {
 
   private movies: Set<Movie> = new Set();
   private series: Set<Serie> = new Set();
+  private cast_members: Set<CastMember> = new Set();
   private constructor() {}
 
   public static get(): ApiRequests {
@@ -163,6 +164,7 @@ export class ApiRequests {
     );
 
     if (response) {
+      response.cast.forEach((e) => this.cast_members.add(e));
       return response.cast;
     } else {
       return [];
@@ -173,9 +175,25 @@ export class ApiRequests {
     const response = await this.fetch_api<{ id: number; cast: CastMember[] }>(`/tv/${id}/credits`);
 
     if (response) {
+      response.cast.forEach((e) => this.cast_members.add(e));
       return response.cast;
     } else {
       return [];
+    }
+  };
+
+  get_cast_member = async (id: number): Promise<CastMember | null> => {
+    const local = this.get_local_memory_cast(id);
+
+    if (local) return local;
+
+    const response = await this.fetch_api<CastMember>(`/person/${id}`);
+
+    if (response) {
+      this.cast_members.add(response);
+      return response;
+    } else {
+      return null;
     }
   };
 
@@ -191,6 +209,12 @@ export class ApiRequests {
 
   private get_local_memory_serie = (id: number): Serie | undefined => {
     const local = Array.from(this.series).find((e) => e.id === id);
+    if (local) console.log("local !");
+    return local;
+  };
+
+  private get_local_memory_cast = (id: number): CastMember | undefined => {
+    const local = Array.from(this.cast_members).find((e) => e.id === id);
     if (local) console.log("local !");
     return local;
   };
