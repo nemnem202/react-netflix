@@ -27,7 +27,7 @@ export default function Banner() {
       }}
     >
       <div className="banner-img-container">
-        <img src={ApiRequests.get_movie_img_url_from_path(movie.poster_path)} alt="" />
+        <img src={ApiRequests.get_img_url_from_path(movie.poster_path)} alt="" />
       </div>
 
       <div className="banner-description-container">

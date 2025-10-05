@@ -6,13 +6,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .media_header {
   display: flex;
   gap: var(--space-8);
   align-items: flex-start;
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
 }
 
@@ -90,6 +92,40 @@
   font-size: var(--text-sm);
   opacity: 0.7;
 }
+
+.media_casting {
+  width: 1200px;
+  h2 {
+    color: var(--primary);
+  }
+}
+
+.casting_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.casting_img {
+  cursor: pointer;
+  transition: var(--transition-1);
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.casting_img:hover {
+  transform: scale(1.1);
+}
+
+.casting_img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+  overflow: hidden;
+}
+
 @media (max-width: 743px) {
   .media_header {
     flex-direction: column;

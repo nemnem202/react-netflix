@@ -11,11 +11,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
         window.location.href = "/movie/" + movie.id;
       }}
     >
-      <img
-        src={ApiRequests.get_movie_img_url_from_path(movie.poster_path)}
-        alt=""
-        className="card-img"
-      />
+      <img src={ApiRequests.get_img_url_from_path(movie.poster_path)} alt="" className="card-img" />
       <div className="card-content">
         <p className="title">{movie.title}</p>
         <div>

@@ -11,11 +11,7 @@ export default function SerieCard({ serie }: { serie: Serie }) {
         window.location.href = "/serie/" + serie.id;
       }}
     >
-      <img
-        src={ApiRequests.get_serie_img_url_from_path(serie.poster_path)}
-        alt=""
-        className="card-img"
-      />
+      <img src={ApiRequests.get_img_url_from_path(serie.poster_path)} alt="" className="card-img" />
       <div className="card-content">
         <p className="title">{serie.name}</p>
         <div>

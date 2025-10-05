@@ -1,3 +1,4 @@
+import type { CastMember } from "../types/cast_member";
 import type { Movie } from "../types/movie";
 import type { Paginated } from "../types/page";
 import type { Query } from "../types/query";
@@ -24,6 +25,7 @@ export class ApiRequests {
 
   private fetch_api = async <T>(route: string): Promise<T | null> => {
     try {
+      console.log("[REQUEST] : " + `${ApiRequests.api_url}/${route}`);
       const res = await fetch(`${ApiRequests.api_url}/${route}`, {
         method: "GET",
         headers: {
@@ -155,11 +157,29 @@ export class ApiRequests {
     }
   };
 
-  static get_movie_img_url_from_path = (path: string | null): string => {
-    return `https://image.tmdb.org/t/p/w342${path}`;
+  get_credits_for_movie = async (id: number): Promise<CastMember[]> => {
+    const response = await this.fetch_api<{ id: number; cast: CastMember[] }>(
+      `/movie/${id}/credits`
+    );
+
+    if (response) {
+      return response.cast;
+    } else {
+      return [];
+    }
   };
 
-  static get_serie_img_url_from_path = (path: string | null): string => {
+  get_credits_for_serie = async (id: number): Promise<CastMember[]> => {
+    const response = await this.fetch_api<{ id: number; cast: CastMember[] }>(`/tv/${id}/credits`);
+
+    if (response) {
+      return response.cast;
+    } else {
+      return [];
+    }
+  };
+
+  static get_img_url_from_path = (path: string | null): string => {
     return `https://image.tmdb.org/t/p/w342${path}`;
   };
 
