@@ -6,24 +6,41 @@ import Spinner from "../partials/spinner";
 
 import "../styles/pages/people.css";
 import type { PeopleDetail } from "../../types/people_detail";
+import type { Movie } from "../../types/movie";
+import type { Serie } from "../../types/serie";
+import MovieCard from "../partials/movie_card";
 
 export default function PeoplePageDetail() {
   const params = useParams<{ id: string }>();
   const id = params.id ? parseInt(params.id) : NaN;
   const [people, setPeople] = useState<PeopleDetail | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  const getPeople = async () => {
+    const peopleRes = await ApiRequests.get().get_cast_member(id);
+    if (peopleRes) {
+      setPeople(peopleRes);
+      console.log(peopleRes);
+    } else {
+      window.location.href = "not_found";
+    }
+  };
+
+  const getMovies = async () => {
+    const movieRes = await ApiRequests.get().get_movies_from_people_id(id);
+    if (movieRes) {
+      setMovies(movieRes);
+      console.log(movieRes);
+    } else {
+      window.location.href = "not_found";
+    }
+  };
 
   useEffect(() => {
-    const fetchPeople = async () => {
-      const peopleRes = await ApiRequests.get().get_cast_member(id);
-      if (peopleRes) {
-        setPeople(peopleRes);
-        console.log(peopleRes);
-      } else {
-        window.location.href = "not_found";
-      }
-    };
-    fetchPeople();
-  }, [id]);
+    if (movies.length > 0 && people) return;
+    getPeople();
+    getMovies();
+  }, [movies, people]);
 
   return (
     <div className="people_page">
@@ -73,6 +90,14 @@ export default function PeoplePageDetail() {
               )}
 
               {people.adult && <span className="adult_badge">🔞</span>}
+            </div>
+          </div>
+          <div className="people_filmography">
+            <h1>Filmography</h1>
+            <div className="people_movies_container">
+              {movies.map((e, i) => (
+                <MovieCard movie={e} key={i} />
+              ))}
             </div>
           </div>
         </>

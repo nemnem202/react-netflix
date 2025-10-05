@@ -59,6 +59,17 @@
   font-size: var(--text-lg);
 }
 
+.people_filmography {
+  max-width: 1200px;
+}
+
+.people_movies_container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 @media (max-width: 743px) {
   .people_header {
     flex-direction: column;

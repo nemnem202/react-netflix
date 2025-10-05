@@ -196,6 +196,32 @@ export class ApiRequests {
     }
   };
 
+  get_movies_from_people_id = async (id: number): Promise<Movie[]> => {
+    const response = await this.fetch_api<{ cast: Movie[]; id: number }>(
+      `/person/${id}/movie_credits`
+    );
+
+    if (response) {
+      response.cast.forEach((e) => this.movies.add(e));
+      return response.cast;
+    } else {
+      return [];
+    }
+  };
+
+  get_series_from_people_id = async (id: number): Promise<Serie[]> => {
+    const response = await this.fetch_api<{ cast: Serie[]; id: number }>(
+      `/person/${id}/tv_credits`
+    );
+
+    if (response) {
+      response.cast.forEach((e) => this.series.add(e));
+      return response.cast;
+    } else {
+      return [];
+    }
+  };
+
   static get_img_url_from_path = (path: string | null): string => {
     if (path === "" || !path) {
       return "https://www.vhv.rs/dpng/d/505-5058560_person-placeholder-image-free-hd-png-download.png";
