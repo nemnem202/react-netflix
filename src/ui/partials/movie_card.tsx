@@ -2,12 +2,15 @@ import Rating from "./rating";
 import "../styles/partials/movie_card.css";
 import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
-import { useNavigate } from "react-router-dom";
 
 export default function MovieCard({ movie }: { movie: Movie }) {
-  const nav = useNavigate();
   return (
-    <div className="card-container" onClick={() => nav("/movie/" + movie.id)}>
+    <div
+      className="card-container"
+      onClick={() => {
+        window.location.href = "/movie/" + movie.id;
+      }}
+    >
       <img
         src={ApiRequests.get_movie_img_url_from_path(movie.poster_path)}
         alt=""

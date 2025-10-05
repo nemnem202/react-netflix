@@ -52,7 +52,7 @@ export default function MediaPage() {
               <div className="media_genres">
                 <span className="label">Genres:</span>
                 {media.genres.map((g, i) => (
-                  <span className="genre_tag" key={i} onClick={() => console.log(g.id)}>
+                  <span className="genre_tag" key={i}>
                     {g.name}
                   </span>
                 ))}
