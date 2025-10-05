@@ -3,6 +3,6 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
   display: flex;
-
+  height: 16rem;
   gap: var(--space-3);
 }

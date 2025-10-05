@@ -6,6 +6,7 @@ import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
 import SerieCard from "./serie_card";
 import type { Query } from "../../types/query";
+import Spinner from "./spinner";
 
 export default function Caroussel({
   type = "movie",
@@ -112,12 +113,16 @@ export default function Caroussel({
             transform: `translateX(${-translationIndex * (12 + 1) - naturalTranslation}rem)`,
           }}
         >
-          {mediaArray.map((e, index) =>
-            "title" in e ? (
-              <MovieCard key={index} movie={e as Movie} />
-            ) : (
-              <SerieCard key={index} serie={e as Serie} />
+          {mediaArray.length > 0 ? (
+            mediaArray.map((e, index) =>
+              "title" in e ? (
+                <MovieCard key={index} movie={e as Movie} />
+              ) : (
+                <SerieCard key={index} serie={e as Serie} />
+              )
             )
+          ) : (
+            <Spinner size={80} />
           )}
         </div>
       </div>

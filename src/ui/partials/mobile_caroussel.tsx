@@ -6,6 +6,7 @@ import type { Serie } from "../../types/serie";
 import { useEffect, useState } from "react";
 import SerieCard from "./serie_card";
 import type { Query } from "../../types/query";
+import Spinner from "./spinner";
 
 export default function MobileCaroussel({
   type,
@@ -30,14 +31,17 @@ export default function MobileCaroussel({
   }, []);
   return (
     <div className="mobile-caroussel">
-      {mediaArray &&
+      {mediaArray ? (
         mediaArray.map((e, index) =>
           "title" in e ? (
             <MovieCard key={index} movie={e as Movie} />
           ) : (
             <SerieCard key={index} serie={e as Serie} />
           )
-        )}
+        )
+      ) : (
+        <Spinner size={80} />
+      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { ApiRequests } from "../../lib/api_request_methods";
 import { useNavigate, useParams } from "react-router-dom";
 import Rating from "../partials/rating";
 import "../styles/pages/media.css";
+import Spinner from "../partials/spinner";
 
 export default function MediaPage() {
   const params = useParams<{ media: string; id: string }>();
@@ -31,21 +32,27 @@ export default function MediaPage() {
   }, []);
 
   return (
-    media && (
-      <div className="media_page">
+    <div className="media_page">
+      {media ? (
         <div className="media_header">
           <img
             className="media_poster"
             src={
-              "title" in media
-                ? ApiRequests.get_movie_img_url_from_path(media.poster_path)
-                : ApiRequests.get_serie_img_url_from_path(media.poster_path)
+              type === "movie"
+                ? ApiRequests.get_movie_img_url_from_path((media as Movie).poster_path)
+                : ApiRequests.get_serie_img_url_from_path((media as Serie).poster_path)
             }
-            alt={("title" in media ? media.title : media.name) || "poster"}
+            alt={
+              type === "movie"
+                ? (media as Movie).title || "poster"
+                : (media as Serie).name || "poster"
+            }
           />
 
           <div className="media_info">
-            <h1 className="media_title">{"title" in media ? media.title : media.name}</h1>
+            <h1 className="media_title">
+              {type === "movie" ? (media as Movie).title : (media as Serie).name}
+            </h1>
             <p className="media_overview">{media.overview}</p>
 
             {media.genres && (
@@ -60,8 +67,10 @@ export default function MediaPage() {
             )}
 
             <div className="media_meta">
-              {media.adult && <span className="adult_badge">🔞</span>}
-              <span className="origin">{media.origin_country}</span>
+              {"adult" in media && (media as Movie).adult && (
+                <span className="adult_badge">🔞</span>
+              )}
+              <span className="origin">{media.origin_country?.join(", ")}</span>
               <span className="status">{media.status}</span>
             </div>
 
@@ -71,7 +80,9 @@ export default function MediaPage() {
             </div>
           </div>
         </div>
-      </div>
-    )
+      ) : (
+        <Spinner size={100} />
+      )}
+    </div>
   );
 }

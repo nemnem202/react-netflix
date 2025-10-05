@@ -3,6 +3,7 @@ import "../styles/partials/banner.css";
 import { useEffect, useState } from "react";
 import type { Movie } from "../../types/movie";
 import { ApiRequests } from "../../lib/api_request_methods";
+import Spinner from "./spinner";
 
 export default function Banner() {
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -41,6 +42,8 @@ export default function Banner() {
       </div>
     </div>
   ) : (
-    <div>oeoe</div>
+    <div className="banner-container">
+      <Spinner size={100} />
+    </div>
   );
 }
